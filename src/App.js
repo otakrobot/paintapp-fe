@@ -1,10 +1,17 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Canvas } from './Canvas'
 import './App.css';
 
 function App() {
+  const [isEraser, setIsEraser] = useState(false);
+
   return (
-    <Canvas />
+    <main>
+      <div className="button" >
+        <button onClick={() => setIsEraser(!isEraser)} > Eraser </button>
+      </div>
+      <Canvas isEraser={isEraser}/>
+    </main>
   );
 }
 

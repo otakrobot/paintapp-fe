@@ -9,16 +9,18 @@ export const CanvasProvider = ({ children }) => {
 
     const prepareCanvas = () => {
         const canvas = canvasRef.current
-        canvas.width = window.innerWidth * 2;
-        canvas.height = window.innerHeight * 2;
-        canvas.style.width = `${window.innerWidth}px`;
-        canvas.style.height = `${window.innerHeight}px`;
+        canvas.width = 640;
+        canvas.height = 425;
+        // canvas.style.width = `${window.innerWidth}px`;
+        // canvas.style.height = `${window.innerHeight}px`;
     
         const context = canvas.getContext("2d")
-        context.scale(2, 2);
+        context.fillStyle = 'red';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+        // context.scale(2, 2);
         context.lineCap = "round";
-        context.strokeStyle = "black";
-        context.lineWidth = 5;
+        context.strokeStyle = "white";
+        context.lineWidth = 2;
         contextRef.current = context;
       };
 
@@ -34,14 +36,19 @@ export const CanvasProvider = ({ children }) => {
         setIsDrawing(false);
     };
 
-    const draw = ({ nativeEvent }) => {
+    const draw = ({ nativeEvent }, isEraser) => {
         if (!isDrawing) {
           return;
         }
         const { offsetX, offsetY } = nativeEvent;
         contextRef.current.lineTo(offsetX, offsetY);
+        if(isEraser){
+          contextRef.current.lineWidth = 20;
+          contextRef.current.strokeStyle = 'red';
+        }
         contextRef.current.stroke();
-        console.log(`X : ${offsetX} Y : ${offsetY}`)
+        // console.log("on mouse move ", isEraser)
+        // console.log(`X : ${offsetX} Y : ${offsetY}`)
       };
     
     // const clearCanvas = () => {
